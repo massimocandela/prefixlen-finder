@@ -1,0 +1,111 @@
+{
+  "name": "prefixlen-finder",
+  "version": "1.13.6",
+  "description": "",
+  "main": "dist/finder.js",
+  "bin": {
+    "prefixlen-finder": "dist/index.js"
+  },
+  "scripts": {
+    "babel": "./node_modules/.bin/babel",
+    "build": "./build.sh",
+    "compile": "rm -rf dist/ && babel src -d dist && cp -R src/dataset/ dist/dataset/",
+    "release": "dotenv release-it",
+    "serve": "babel-node src/index.js",
+    "inspect": "node --inspect --require @babel/register index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/massimocandela/prefixlen-finder.git"
+  },
+  "keywords": [
+    "prefixlen",
+    "rpsl",
+    "whois"
+  ],
+  "author": {
+    "name": "Massimo Candela",
+    "url": "https://massimocandela.com"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/massimocandela/prefixlen-finder/issues"
+  },
+  "homepage": "https://github.com/massimocandela/prefixlen-finder#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/node": "^7.26.0",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/preset-env": "^7.26.0",
+    "dotenv-cli": "^7.4.2",
+    "pkg": "^5.8.1",
+    "release-it": "^17.10.0"
+  },
+  "dependencies": {
+    "fast-file-logger": "^1.1.5",
+    "whois-link-finder": "^1.0.2",
+    "yargs": "^17.7.2"
+  },
+  "pkg": {
+    "scripts": [],
+    "assets": [
+      "./src/dataset/*.json"
+    ],
+    "targets": [
+      "node18"
+    ]
+  },
+  "release-it": {
+    "hooks": {
+      "before:init": [],
+      "after:bump": "rm -rf bin && mkdir bin && rm -rf dist && mkdir dist && npm ci --silent && npm run compile",
+      "after:release": [
+        "echo Successfully released ${name} v${version} to ${repo.repository}.",
+        "rm -rf bin/",
+        "rm -rf dist/"
+      ]
+    },
+    "git": {
+      "changelog": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
+      "requireCleanWorkingDir": true,
+      "requireBranch": "main",
+      "requireUpstream": true,
+      "requireCommits": false,
+      "addUntrackedFiles": false,
+      "commit": true,
+      "commitMessage": "Release v${version}",
+      "commitArgs": [],
+      "tag": true,
+      "tagName": null,
+      "tagAnnotation": "Release v${version}",
+      "tagArgs": [],
+      "push": true,
+      "pushArgs": [
+        "--follow-tags"
+      ],
+      "pushRepo": ""
+    },
+    "gitlab": {
+      "release": false
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}",
+      "tokenRef": "GITHUB_TOKEN",
+      "origin": null,
+      "skipChecks": false,
+      "assets": [
+        "bin/prefixlen-finder-linux-x64",
+        "bin/prefixlen-finder-macos-x64",
+        "bin/prefixlen-finder-win-x64.exe",
+        "bin/prefixlen-finder-macos-arm64"
+      ]
+    }
+  }
+}
