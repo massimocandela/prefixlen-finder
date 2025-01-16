@@ -1,6 +1,6 @@
 {
   "name": "prefixlen-finder",
-  "version": "1.13.6",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/finder.js",
   "bin": {
@@ -8,7 +8,6 @@
   },
   "scripts": {
     "babel": "./node_modules/.bin/babel",
-    "build": "./build.sh",
     "compile": "rm -rf dist/ && babel src -d dist && cp -R src/dataset/ dist/dataset/",
     "release": "dotenv release-it",
     "serve": "babel-node src/index.js",
