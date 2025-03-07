@@ -1,6 +1,7 @@
 import Finder from "whois-link-finder";
 import yargs from "yargs";
 import FileLogger from "fast-file-logger";
+import fs from "fs";
 
 const logger = new FileLogger({
     logRotatePattern: "YYYY-MM-DD",
@@ -114,15 +115,17 @@ const options = {
 
 new Finder(options)
     .run()
+    .then(Finder.setEntryPriority)
     .then(data => {
-        console.log(data);
+
         fs.writeFileSync(options.output, "");
+
         const out = fs.createWriteStream(options.output, {
             flags: "a"
         });
 
-        for (let line of data ?? []) {
-            out.write(line + "\n");
+        for (let item of data ?? []) {
+            out.write(`${item.prefix},${item.len},\n`);
         }
         out.end();
 
