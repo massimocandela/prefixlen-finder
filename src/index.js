@@ -94,6 +94,7 @@ const options = {
     include: (params.i ?? "ripe,apnic,lacnic,afrinic,arin").split(","),
     output: params.o || "result.csv",
     test: params.t || null,
+    specialKeys: ["prefixlen", "Prefixlen"],
     parseLine: (inetnum, data) => {
 
         const items = data.split(/\r?\n/)
