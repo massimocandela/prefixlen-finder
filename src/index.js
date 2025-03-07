@@ -2,6 +2,7 @@ import Finder from "whois-link-finder";
 import yargs from "yargs";
 import FileLogger from "fast-file-logger";
 import fs from "fs";
+import ipUtils from "ip-sub";
 
 const logger = new FileLogger({
     logRotatePattern: "YYYY-MM-DD",
@@ -102,13 +103,15 @@ const options = {
             .filter(i => !!i && !i.startsWith("#") && i.trim() !== "")
             .map(i => i.split(","));
 
-        return items.map(([prefix, len]) => {
-            return {
-                inetnum,
-                prefix,
-                len
-            };
-        });
+        return items
+            .map(([prefix, len]) => {
+                return {
+                    inetnum,
+                    prefix,
+                    len
+                };
+            })
+            .filter(({inetnum, prefix}) => ipUtils.getAddressFamily(inetnum) === ipUtils.getAddressFamily(prefix));
     },
     downloadTimeout: params.d || 10 // 0 is not a valid value
 };
