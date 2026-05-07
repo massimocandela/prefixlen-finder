@@ -8,6 +8,7 @@
   },
   "scripts": {
     "babel": "./node_modules/.bin/babel",
+    "build": "./build.sh",
     "compile": "rm -rf dist/ && babel src -d dist",
     "release": "dotenv release-it",
     "serve": "babel-node src/index.js",
@@ -40,7 +41,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/preset-env": "^7.29.5",
     "dotenv-cli": "^7.4.2",
-    "pkg": "^5.8.1",
+    "@yao-pkg/pkg": "^6.19.0",
     "release-it": "^19.0.3"
   },
   "dependencies": {
