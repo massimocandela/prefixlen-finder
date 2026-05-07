@@ -56,13 +56,13 @@
       "./src/dataset/*.json"
     ],
     "targets": [
-      "node18"
+      "node22"
     ]
   },
   "release-it": {
     "hooks": {
       "before:init": [],
-      "after:bump": "rm -rf bin && mkdir bin && rm -rf dist && mkdir dist && npm ci --silent && npm run compile",
+      "after:bump": "npm run build",
       "after:release": [
         "echo Successfully released ${name} v${version} to ${repo.repository}.",
         "rm -rf bin/",
